@@ -9,10 +9,19 @@
  *       b otherwise
  */
 
+// TODO: Create Or4Way to use instead Or8Way
+
 CHIP Mux {
     IN a, b, sel;
     OUT out;
 
     PARTS:
-    // Put your code here:
+        Not(in=a, out=notA);
+        Not(in=b, out=notB);
+        Not(in=sel, out=notSel);
+        And3Way(in[0]=notA, in[1]=b, in[2]=sel, out=notABSel);
+        And3Way(in[0]=a, in[1]=notB, in[2]=notSel, out=aNotBNotSel);
+        And3Way(in[0]=a, in[1]=b, in[2]=notSel, out=aBNotSel);
+        And3Way(in[0]=a, in[1]=b, in[2]=sel, out=aBSel);
+        Or8Way(in[0]=notABSel, in[1]=aNotBNotSel, in[2]=aBNotSel, in[3]=aBSel, in[4]=false, in[5]=false, in[6]=false, in[7]=false, out=out);
 }
