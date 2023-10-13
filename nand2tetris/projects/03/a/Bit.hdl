@@ -9,10 +9,13 @@
  *                 else out does not change (out[t+1] = out[t])
  */
 
+// TODO: Implement my on Data-Flip-Flop
+
 CHIP Bit {
     IN in, load;
     OUT out;
 
     PARTS:
-    // Put your code here:
+        Mux(a=auxOut,b=in,sel=load,out=a);
+        DFF(in=a,out=out,out=auxOut);
 }
